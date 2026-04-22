@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Vision — Talk to crypto like it's a person</title>
+<title>Vision — Ask anything, unlock everything.</title>
 <meta name="description" content="Manage wallets, trade tokens, and interact with any blockchain in plain English. Vision is the conversational layer for crypto." />
 
 <!-- Canonical + theme -->
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Vision" />
 <meta property="og:url" content="https://askvision.ai/" />
-<meta property="og:title" content="Vision — Talk to crypto like it's a person" />
+<meta property="og:title" content="Vision — Ask anything, unlock everything." />
 <meta property="og:description" content="Manage wallets, trade tokens, and interact with any blockchain in plain English. The AI interface for on-chain." />
 <meta property="og:image" content="https://askvision.ai/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -32,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@askvisiondotai" />
 <meta name="twitter:creator" content="@askvisiondotai" />
-<meta name="twitter:title" content="Vision — Talk to crypto like it's a person" />
+<meta name="twitter:title" content="Vision — Ask anything, unlock everything." />
 <meta name="twitter:description" content="Manage wallets, trade tokens, and interact with any blockchain in plain English. The AI interface for on-chain." />
 <meta name="twitter:image" content="https://askvision.ai/og-image.png" />
 
@@ -159,13 +159,62 @@
     padding: 110px 28px 60px;
     text-align:center;
     position:relative;
+    isolation: isolate;
   }
+
+  /* Ambient backdrop — sits behind everything in the hero */
+  .hero-backdrop{
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(640px, 90%);
+    height: 420px;
+    pointer-events: none;
+    z-index: -1;
+    display: grid;
+    place-items: center;
+  }
+  .hero-ghost{
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: .6;
+    animation: ghostFloat 9s ease-in-out infinite;
+  }
+  @keyframes ghostFloat{
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  .hero-aurora{
+    position: absolute;
+    inset: -20% -30%;
+    background:
+      radial-gradient(ellipse 55% 50% at 50% 45%, rgba(139, 92, 246, .28), transparent 65%),
+      radial-gradient(ellipse 35% 35% at 30% 30%, rgba(196, 181, 253, .18), transparent 70%),
+      radial-gradient(ellipse 35% 35% at 72% 40%, rgba(99, 102, 241, .16), transparent 70%);
+    filter: blur(32px);
+    opacity: .9;
+    animation: auroraDrift 14s ease-in-out infinite;
+  }
+  @keyframes auroraDrift{
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: .9; }
+    33%      { transform: translate(-2%, 1%) scale(1.04); opacity: 1; }
+    66%      { transform: translate(2%, -1%) scale(.98); opacity: .85; }
+  }
+
   @media (max-width: 720px){
     .hero{ padding: 72px 20px 40px; }
     .cta-row{ flex-direction: column; align-items: stretch; gap: 10px; }
     .cta-row .btn{ justify-content: center; }
     .supports{ margin-top: 56px; }
     .chain-row{ gap: 16px 20px; font-size: 13px; }
+    .hero-backdrop{ height: 280px; top: -10px; width: 92%; }
+    .hero-ghost{ opacity: .5; }
+    .hero-aurora{ filter: blur(22px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-ghost, .hero-aurora{ animation: none; }
   }
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
@@ -1351,6 +1400,25 @@
 
   <!-- HERO -->
   <header class="hero">
+    <!-- Ambient backdrop: ghost triangle + aurora glow -->
+    <div class="hero-backdrop" aria-hidden="true">
+      <div class="hero-aurora"></div>
+      <svg class="hero-ghost" viewBox="0 0 400 360" fill="none" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="ghostStroke" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="rgba(255,255,255,.22)"/>
+            <stop offset="1" stop-color="rgba(196,181,253,.06)"/>
+          </linearGradient>
+          <radialGradient id="ghostFill" cx="0.5" cy="0.55" r="0.6">
+            <stop offset="0" stop-color="rgba(255,255,255,.04)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+          </radialGradient>
+        </defs>
+        <path d="M200 20 L380 340 L20 340 Z"
+              stroke="url(#ghostStroke)" stroke-width="1.25" stroke-linejoin="round"
+              fill="url(#ghostFill)"/>
+      </svg>
+    </div>
     <div class="eyebrow"><span class="dot"></span> Early testing phase active</div>
     <h1 class="display">
       Talk to crypto <em>like it's a person.</em>
